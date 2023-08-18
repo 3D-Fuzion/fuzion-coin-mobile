@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {SafeAreaView} from 'react-native';
-import BarraNav from './componentes/BarraNav';
+import MainScreen from './componentes/MainScreen';
 
 export default class App extends Component {
   render() {
     return (
-      <SafeAreaView>
-        <BarraNav />
+      <SafeAreaView
+        style={{
+          backgroundColor: 'green',
+        }}>
+        <MainScreen style={{}}></MainScreen>
       </SafeAreaView>
     );
   }
