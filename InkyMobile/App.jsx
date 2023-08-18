@@ -1,21 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import Comp1 from './componentes/comp1';
+import {SafeAreaView} from 'react-native';
+import BarraNav from './componentes/BarraNav';
 
-export default class App1 extends Component {
+export default class App extends Component {
   render() {
     return (
-      <View>
-        <Comp1 />
-      </View>
+      <SafeAreaView>
+        <BarraNav />
+      </SafeAreaView>
     );
   }
 }
-
-// export default function App() {
-//   return (
-//     <View>
-//       <Text>Hello World!</Text>
-//     </View>
-//   );
-// }
