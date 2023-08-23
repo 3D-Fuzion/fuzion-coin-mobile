@@ -3,20 +3,26 @@ import {SafeAreaView, Text, TouchableOpacity, TextInput} from 'react-native';
 import axios from 'axios';
 import * as KeyChain from 'react-native-keychain';
 
-export default function LoginScreen() {
+export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  async function Login() {
-    const credentials = await KeyChain.getGenericPassword();
-    console.log(credentials.password);
+  useEffect(() => {
+    console.log(senha, email);
+  }, [senha, email]);
+
+  function Login() {
+    //const credentials = await KeyChain.getGenericPassword();
+    //console.log(credentials.password);
     axios
-      .post('http://10.0.2.2:3001/user/login', {
-        email: new String(email),
-        password: new String(senha),
+      .post('http://192.168.0.198:3001/user/login', {
+        email: 'vendedor4@gmail.com',
+        password: 'Senha1234',
       })
-      .then(async response => {
-        await KeyChain.setGenericPassword(email, response.data.token);
+      .then(response => {
+        //await KeyChain.setGenericPassword(email, response.data.token);
+        console.log(response.data);
+        navigation.navigate('Main');
       })
       .catch(err => {
         console.error(err);

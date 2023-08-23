@@ -19,7 +19,7 @@ export default function MainScreen(props) {
 
   useEffect(() => {
     RefreshCoins();
-  }, []);
+  });
 
   return (
     <SafeAreaView
