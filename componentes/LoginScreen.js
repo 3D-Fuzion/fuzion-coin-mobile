@@ -15,23 +15,24 @@ export default function LoginScreen({navigation}) {
   const [senha, setSenha] = useState('');
   const [isLogging, setLogin] = useState(false);
 
-  useEffect(() => {
-    console.log(senha, email);
-  }, [senha, email]);
+  // useEffect(() => {
+  //   console.log(senha, email);
+  // }, [senha, email]);
 
   function Login() {
-    setLogin(true);
+    // axios.get('http://192.168.1.50:4000/user').then(response => {
+    //   console.log(response.data);
+    // });
+
     axios
-      .post('https://fuzion-coin.azurewebsites.net/user/login', {
+      .post('http://192.168.1.50:4000/user/login', {
         email: email,
         password: senha,
       })
       .then(async res => {
         await KeyChain.setGenericPassword(email, res.data.token);
-        console.log(await KeyChain.getGenericPassword().password);
         const id = res.data.id;
         console.log(id);
-
         if (res.status === 200) {
           navigation.navigate('Home', {
             id: {id},
@@ -39,12 +40,17 @@ export default function LoginScreen({navigation}) {
         }
       })
       .catch(error => {
-        Alert.alert(
-          'Senha Incorreta',
-          'Verique se voce digitou a senha corretamente',
-        );
+        if (error.response.status === 400) {
+          Alert.alert('Senha Incorreta', 'Verique a sua senha.');
+        } else if (error.response.status === 404) {
+          Alert.alert(
+            'Usuario Nao Encontrado',
+            'Nao conseguimos achar um usuario com esse email.',
+          );
+        } else {
+          Alert.alert('Ocorreu um Erro', 'O Sistema pode estar fora do ar');
+        }
       });
-    setLogin(false);
   }
 
   return (

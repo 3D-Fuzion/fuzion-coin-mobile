@@ -13,10 +13,14 @@ export default function MainScreen({navigation, route}) {
 
   function RefreshCoins() {
     const {id} = route.params;
-    let url = 'https://fuzion-coin.azurewebsites.net/coin/' + id.id;
-
+    let url = 'http://192.168.1.50:4000/coin/' + id.id;
     axios
-      .get(url)
+      .get(url, {
+        headers: {
+          'x-acess-token':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ2ZW5kZWRvcjRAZ21haWwuY29tIiwiaWF0IjoxNjkyODMwNjU0LCJleHAiOjE2OTI4MzA5NTR9.Koz6Q6kdAmkfof9SzSck02v0gHBwM7oiq1TXp6F_0NA',
+        },
+      })
       .then(res => {
         setCoins(res.data.coin);
       })
