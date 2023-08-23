@@ -1,15 +1,27 @@
 import {React, useEffect, useState} from 'react';
 import {SafeAreaView, Text, TouchableOpacity, TextInput} from 'react-native';
 import axios from 'axios';
+import * as KeyChain from 'react-native-keychain';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  useEffect(() => {
-    console.log(email);
-    console.log(senha);
-  }, [email, senha]);
+  async function Login() {
+    const credentials = await KeyChain.getGenericPassword();
+    console.log(credentials.password);
+    axios
+      .post('http://10.0.2.2:3001/user/login', {
+        email: new String(email),
+        password: new String(senha),
+      })
+      .then(async response => {
+        await KeyChain.setGenericPassword(email, response.data.token);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
 
   return (
     <SafeAreaView>
@@ -36,6 +48,7 @@ export default function LoginScreen() {
           <SafeAreaView>
             <Text style={{marginLeft: 10}}>Email</Text>
             <TextInput
+              onChange={event => setEmail(event.nativeEvent.text)}
               style={{
                 backgroundColor: 'gray',
                 margin: 10,
@@ -43,17 +56,17 @@ export default function LoginScreen() {
               }}></TextInput>
             <Text style={{marginLeft: 10}}>Senha</Text>
             <TextInput
+              secureTextEntry={true}
+              onChange={event => setSenha(event.nativeEvent.text)}
               style={{
                 backgroundColor: 'gray',
                 margin: 10,
                 fontSize: 20,
-              }}
-              secureTextEntry={true}
-              onChange={newText => setText(newText)}></TextInput>
+              }}></TextInput>
           </SafeAreaView>
         </SafeAreaView>
         <SafeAreaView style={{width: '80%'}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={Login}>
             <Text
               style={{
                 textAlign: 'center',
