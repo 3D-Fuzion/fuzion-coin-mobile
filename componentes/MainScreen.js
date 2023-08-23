@@ -3,32 +3,26 @@ import {SafeAreaView, Text, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import * as KeyChain from 'react-native-keychain';
 
-export default function MainScreen(props) {
+export default function MainScreen({navigation, route}) {
   const [coins, setCoins] = useState(0);
 
   async function GetToken() {
     const token = await KeyChain.getGenericPassword();
-    console.log(token.password);
     return token.password.toString();
   }
 
   function RefreshCoins() {
-    console.log(GetToken());
-    // let config = {
-    //   headers: {
-    //     'x-acess-token':
-    //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ2ZW5kZWRvcjRAZ21haWwuY29tIiwiaWF0IjoxNjkyODE2MzU3LCJleHAiOjE2OTI4MTY2NTd9.1Jsbx9VruCxNrzhg1m95pVQfMlerW4PGVAjlnKKVg6s',
-    //   },
-    // };
+    const {id} = route.params;
+    let url = 'https://fuzion-coin.azurewebsites.net/coin/' + id.id;
+
     axios
-      .get(
-        'https://fuzion-coin.azurewebsites.net/coin/64d3d4f8c8e9609cada7907c',
-      )
-      .then(async response => setCoins(response.data.coin))
+      .get(url)
+      .then(res => {
+        setCoins(res.data.coin);
+      })
       .catch(err => {
         console.error(err);
       });
-    console.log(coins);
   }
 
   useEffect(() => {

@@ -1,17 +1,26 @@
 import {React, useEffect, useState} from 'react';
-import {SafeAreaView, Text, TouchableOpacity, TextInput} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import axios from 'axios';
 import * as KeyChain from 'react-native-keychain';
 
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [isLogging, setLogin] = useState(false);
 
   useEffect(() => {
     console.log(senha, email);
   }, [senha, email]);
 
   function Login() {
+    setLogin(true);
     axios
       .post('https://fuzion-coin.azurewebsites.net/user/login', {
         email: email,
@@ -21,13 +30,21 @@ export default function LoginScreen({navigation}) {
         await KeyChain.setGenericPassword(email, res.data.token);
         console.log(await KeyChain.getGenericPassword().password);
         const id = res.data.id;
+        console.log(id);
+
         if (res.status === 200) {
           navigation.navigate('Home', {
             id: {id},
           });
         }
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        Alert.alert(
+          'Senha Incorreta',
+          'Verique se voce digitou a senha corretamente',
+        );
+      });
+    setLogin(false);
   }
 
   return (
