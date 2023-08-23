@@ -12,21 +12,22 @@ export default function LoginScreen({navigation}) {
   }, [senha, email]);
 
   function Login() {
-    //const credentials = await KeyChain.getGenericPassword();
-    //console.log(credentials.password);
     axios
-      .post('http://192.168.0.198:3001/user/login', {
-        email: 'vendedor4@gmail.com',
-        password: 'Senha1234',
+      .post('https://fuzion-coin.azurewebsites.net/user/login', {
+        email: email,
+        password: senha,
       })
-      .then(response => {
-        //await KeyChain.setGenericPassword(email, response.data.token);
-        console.log(response.data);
-        navigation.navigate('Main');
+      .then(async res => {
+        await KeyChain.setGenericPassword(email, res.data.token);
+        console.log(await KeyChain.getGenericPassword().password);
+        const id = res.data.id;
+        if (res.status === 200) {
+          navigation.navigate('Home', {
+            id: {id},
+          });
+        }
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(error => console.log(error));
   }
 
   return (

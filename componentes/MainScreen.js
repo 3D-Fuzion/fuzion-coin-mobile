@@ -1,16 +1,30 @@
 import {React, useEffect, useState} from 'react';
 import {SafeAreaView, Text, TouchableOpacity} from 'react-native';
 import axios from 'axios';
+import * as KeyChain from 'react-native-keychain';
 
 export default function MainScreen(props) {
   const [coins, setCoins] = useState(0);
 
+  async function GetToken() {
+    const token = await KeyChain.getGenericPassword();
+    console.log(token.password);
+    return token.password.toString();
+  }
+
   function RefreshCoins() {
+    console.log(GetToken());
+    // let config = {
+    //   headers: {
+    //     'x-acess-token':
+    //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ2ZW5kZWRvcjRAZ21haWwuY29tIiwiaWF0IjoxNjkyODE2MzU3LCJleHAiOjE2OTI4MTY2NTd9.1Jsbx9VruCxNrzhg1m95pVQfMlerW4PGVAjlnKKVg6s',
+    //   },
+    // };
     axios
-      .get('https://fuzion-coin.azurewebsites.net/user')
-      .then(response =>
-        setCoins(response.data[Math.floor(Math.random() * 5)].coin),
+      .get(
+        'https://fuzion-coin.azurewebsites.net/coin/64d3d4f8c8e9609cada7907c',
       )
+      .then(async response => setCoins(response.data.coin))
       .catch(err => {
         console.error(err);
       });
@@ -19,7 +33,7 @@ export default function MainScreen(props) {
 
   useEffect(() => {
     RefreshCoins();
-  });
+  }, ['']);
 
   return (
     <SafeAreaView
