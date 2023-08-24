@@ -41,55 +41,134 @@ export default function MainScreen({navigation, route}) {
 
   return (
     <SafeAreaView
-      style={{alignItems: 'center', backgroundColor: 'white', height: '100%'}}>
+      style={{
+        alignItems: 'center',
+        backgroundColor: 'rgba(15, 54, 85, 255)',
+        height: '100%',
+      }}>
       <SafeAreaView
-        style={{width: '100%', marginTop: 10, backgroundColor: 'gray'}}>
-        <Text style={{textAlign: 'center', fontSize: 80}}>{coins}</Text>
+        style={{
+          width: '80%',
+          borderRadius: 10,
+          marginTop: 40,
+          backgroundColor: 'rgba(17,76,120,255)',
+        }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 80,
+            color: 'white',
+            fontWeight: '500',
+            transform: [{translateY: -10}],
+          }}>
+          {coins}
+        </Text>
       </SafeAreaView>
       <TouchableOpacity
         onPress={RefreshCoins}
         style={{
           position: 'absolute',
-          width: 50,
-          height: 50,
-          transform: [{translateY: +45}, {translateX: +150}],
-          backgroundColor: 'rgb(200, 200, 200)',
+          width: 60,
+          height: 60,
+          borderRadius: 10,
+          borderWidth: 4,
+          borderColor: 'rgba(15, 54, 85, 255)',
+          transform: [{translateY: +70}, {translateX: +160}],
+          backgroundColor: 'rgb(90,200,255)',
         }}></TouchableOpacity>
       <SafeAreaView
         style={{
           width: '50%',
           height: 50,
+          borderRadius: 10,
+          borderWidth: 4,
+          borderColor: 'rgba(15, 54, 85, 255)',
           transform: [{translateY: -25}],
-          backgroundColor: 'rgb(200, 200, 200)',
+          backgroundColor: 'rgba(40,76,120,255)',
         }}>
-        <Text style={{textAlign: 'center', fontSize: 80}}>Teste</Text>
+        <Text
+          style={{
+            color: 'white',
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            fontSize: 30,
+          }}>
+          R$ 0,00
+        </Text>
       </SafeAreaView>
       <SafeAreaView
         style={{
           flexDirection: 'column',
           marginTop: 50,
           gap: 10,
-          backgroundColor: 'rgb(200, 200, 200)',
+          backgroundColor: 'transparent',
           width: '90%',
         }}>
-        <SafeAreaView
-          style={{
-            width: '100%',
-            height: 100,
-            backgroundColor: 'gray',
-          }}></SafeAreaView>
-        <SafeAreaView
-          style={{
-            width: '100%',
-            height: 100,
-            backgroundColor: 'gray',
-          }}></SafeAreaView>
-        <SafeAreaView
-          style={{
-            width: '100%',
-            height: 100,
-            backgroundColor: 'gray',
-          }}></SafeAreaView>
+        <TouchableOpacity>
+          <SafeAreaView
+            style={{
+              width: '100%',
+              height: 100,
+              borderRadius: 10,
+              backgroundColor: 'rgba(17,76,120,255)',
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                width: '100%',
+                textAlignVertical: 'center',
+                height: '100%',
+                fontSize: 30,
+                textAlign: 'center',
+              }}>
+              Sacar Dinheiro
+            </Text>
+          </SafeAreaView>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <SafeAreaView
+            style={{
+              width: '100%',
+              borderRadius: 10,
+              height: 100,
+              backgroundColor: 'rgba(17,76,120,255)',
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                width: '100%',
+                textAlignVertical: 'center',
+                height: '100%',
+                fontSize: 30,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+              }}>
+              Ver Extrato
+            </Text>
+          </SafeAreaView>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <SafeAreaView
+            style={{
+              width: '100%',
+              height: 100,
+              borderRadius: 10,
+              backgroundColor: 'rgba(17,76,120,255)',
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                width: '100%',
+                textAlignVertical: 'center',
+                height: '100%',
+                fontSize: 30,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+              }}>
+              Realizar Transferência
+            </Text>
+          </SafeAreaView>
+        </TouchableOpacity>
       </SafeAreaView>
       <SafeAreaView
         style={{
@@ -100,26 +179,30 @@ export default function MainScreen({navigation, route}) {
           justifyContent: 'center',
           width: '100%',
           height: 80,
-          backgroundColor: 'rgb(200, 200, 200)',
+          marginBottom: 20,
+          backgroundColor: 'rgba(15, 54, 85, 255)',
         }}>
-        <SafeAreaView
+        <TouchableOpacity
           style={{
             width: '20.00%',
-            backgroundColor: 'gray',
+            borderRadius: 10,
+            backgroundColor: 'rgba(17,76,120,255)',
             justifyContent: 'center',
-          }}></SafeAreaView>
-        <SafeAreaView
+          }}></TouchableOpacity>
+        <TouchableOpacity
           style={{
             width: '20.00%',
-            backgroundColor: 'gray',
+            borderRadius: 10,
+            backgroundColor: 'rgba(17,76,120,255)',
             justifyContent: 'center',
-          }}></SafeAreaView>
-        <SafeAreaView
+          }}></TouchableOpacity>
+        <TouchableOpacity
           style={{
             width: '20.00%',
-            backgroundColor: 'gray',
+            borderRadius: 10,
+            backgroundColor: 'rgba(17,76,120,255)',
             justifyContent: 'center',
-          }}></SafeAreaView>
+          }}></TouchableOpacity>
       </SafeAreaView>
     </SafeAreaView>
   );
