@@ -13,26 +13,19 @@ import * as KeyChain from 'react-native-keychain';
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [isLogging, setLogin] = useState(false);
-
-  // useEffect(() => {
-  //   console.log(senha, email);
-  // }, [senha, email]);
 
   function Login() {
-    // axios.get('http://192.168.1.50:4000/user').then(response => {
-    //   console.log(response.data);
-    // });
-
     axios
-      .post('http://192.168.1.50:4000/user/login', {
+      .post('https://fuzion-coin.azurewebsites.net/user/login', {
         email: email,
         password: senha,
       })
       .then(async res => {
+        await KeyChain.resetGenericPassword();
         await KeyChain.setGenericPassword(email, res.data.token);
+        const token = await KeyChain.getGenericPassword();
         const id = res.data.id;
-        console.log(id);
+        console.log(token.password);
         if (res.status === 200) {
           navigation.navigate('Home', {
             id: {id},

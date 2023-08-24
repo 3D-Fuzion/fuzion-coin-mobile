@@ -1,5 +1,5 @@
 import {React, useEffect, useState} from 'react';
-import {SafeAreaView, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView, Text, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
 import * as KeyChain from 'react-native-keychain';
 
@@ -11,21 +11,27 @@ export default function MainScreen({navigation, route}) {
     return token.password.toString();
   }
 
-  function RefreshCoins() {
+  async function RefreshCoins() {
     const {id} = route.params;
-    let url = 'http://192.168.1.50:4000/coin/' + id.id;
+    let url = 'https://fuzion-coin.azurewebsites.net/coin/' + id.id;
+    token = await KeyChain.getGenericPassword();
+    console.log(token.password);
     axios
       .get(url, {
         headers: {
-          'x-acess-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ2ZW5kZWRvcjRAZ21haWwuY29tIiwiaWF0IjoxNjkyODMwNjU0LCJleHAiOjE2OTI4MzA5NTR9.Koz6Q6kdAmkfof9SzSck02v0gHBwM7oiq1TXp6F_0NA',
+          'x-acess-token': token.password,
         },
       })
       .then(res => {
         setCoins(res.data.coin);
       })
-      .catch(err => {
-        console.error(err);
+      .catch(error => {
+        if (error.response.status === 401) {
+          Alert.alert('Sessão Expirada', 'Vamos te desconectar por segurança');
+          navigation.navigate('Login');
+        } else {
+          Alert.alert('Ocorreu um Erro', 'O Sistema pode estar fora do ar');
+        }
       });
   }
 
