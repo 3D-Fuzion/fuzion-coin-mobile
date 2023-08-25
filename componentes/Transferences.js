@@ -10,6 +10,7 @@ import {
   Modal,
   TextInput,
   Pressable,
+  KeyboardAvoidingView,
 } from 'react-native';
 import axios from 'axios';
 import * as KeyChain from 'react-native-keychain';
@@ -76,69 +77,53 @@ export default function LoginScreen({navigation, route}) {
     <View
       style={{
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: 'rgba(15, 54, 85, 255)',
-        height: '100%',
+        flex: 1,
       }}>
-      <Text style={{color: 'white'}}>Insira o email da conta</Text>
       <View
         style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '80%',
+          alignItems: 'center',
+          justifyContent: 'top',
           gap: 10,
-          marginTop: 20,
+          width: '90%',
+          height: '90%',
+          backgroundColor: 'white',
+          padding: 20,
+          borderRadius: 10,
         }}>
         <TextInput
-          onChange={event => setUserEmail(event.nativeEvent.text)}
-          autoCapitalize={'none'}
           style={{
-            color: 'black',
-            backgroundColor: 'white',
-            padding: 10,
-            flex: 80,
-            width: '70%',
-            height: 50,
-            fontSize: 20,
+            width: '100%',
+            height: '10%',
+            minHeight: 80,
+            backgroundColor: 'orange',
             borderRadius: 10,
-          }}
-        />
+          }}></TextInput>
         <TouchableOpacity
-          onPress={GetUser}
           style={{
-            height: 50,
-            flex: 20,
-            alignSelf: 'center',
-            backgroundColor: 'white',
+            width: '100%',
+            height: '5%',
+            minHeight: 40,
+            backgroundColor: 'green',
             borderRadius: 10,
-            width: '20%',
+          }}></TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            width: '100%',
+            height: '30%',
+            minHeight: 200,
+            backgroundColor: 'purple',
+            borderRadius: 10,
+          }}></TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'purple',
+            borderRadius: 10,
           }}></TouchableOpacity>
       </View>
-      <View
-        style={{
-          width: '80%',
-          height: 50,
-          borderWidth: 5,
-          borderColor: 'white',
-          marginTop: 10,
-          borderRadius: 10,
-        }}>
-        <SafeAreaView
-          style={{
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-          }}>
-          {userContainer}
-        </SafeAreaView>
-      </View>
-      <TouchableOpacity
-        style={{
-          minHeight: '5%',
-          maxHeight: '5%',
-          marginTop: 10,
-          width: '80%',
-          backgroundColor: 'rgb(100,255,100)',
-          borderRadius: 10,
-        }}></TouchableOpacity>
     </View>
   );
 }
