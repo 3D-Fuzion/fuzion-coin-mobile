@@ -94,6 +94,7 @@ export default function LoginScreen({navigation}) {
               autoCapitalize={'none'}
               onChange={event => setEmail(event.nativeEvent.text)}
               style={{
+                color: 'black',
                 backgroundColor: 'white',
                 margin: 10,
                 padding: 10,
@@ -106,6 +107,7 @@ export default function LoginScreen({navigation}) {
               secureTextEntry={true}
               onChange={event => setSenha(event.nativeEvent.text)}
               style={{
+                color: 'black',
                 backgroundColor: 'white',
                 margin: 10,
                 padding: 10,

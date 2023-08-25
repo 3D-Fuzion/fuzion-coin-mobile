@@ -6,15 +6,10 @@ import * as KeyChain from 'react-native-keychain';
 export default function MainScreen({navigation, route}) {
   const [coins, setCoins] = useState(0);
 
-  async function GetToken() {
-    const token = await KeyChain.getGenericPassword();
-    return token.password.toString();
-  }
-
   async function RefreshCoins() {
     const {id} = route.params;
     let url = 'https://fuzion-coin.azurewebsites.net/coin/' + id.id;
-    token = await KeyChain.getGenericPassword();
+    const token = await KeyChain.getGenericPassword();
     console.log(token.password);
     axios
       .get(url, {
@@ -33,6 +28,13 @@ export default function MainScreen({navigation, route}) {
           Alert.alert('Ocorreu um Erro', 'O Sistema pode estar fora do ar');
         }
       });
+  }
+
+  function Transferences() {
+    const {id} = route.params;
+    navigation.navigate('Transferences', {
+      id: {id},
+    });
   }
 
   useEffect(() => {
@@ -147,7 +149,7 @@ export default function MainScreen({navigation, route}) {
             </Text>
           </SafeAreaView>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={Transferences}>
           <SafeAreaView
             style={{
               width: '100%',
