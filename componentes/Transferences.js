@@ -116,13 +116,6 @@ export default function LoginScreen({navigation, route}) {
             backgroundColor: 'purple',
             borderRadius: 10,
           }}></TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'purple',
-            borderRadius: 10,
-          }}></TouchableOpacity>
       </View>
     </View>
   );
