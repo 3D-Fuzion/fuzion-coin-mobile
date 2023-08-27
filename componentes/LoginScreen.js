@@ -26,12 +26,10 @@ export default function LoginScreen({navigation}) {
       .then(async res => {
         await KeyChain.resetGenericPassword();
         await KeyChain.setGenericPassword(email, res.data.token);
-        const token = await KeyChain.getGenericPassword();
         const id = res.data.id;
-        console.log(token.password);
         if (res.status === 200) {
           navigation.navigate('Home', {
-            id: {id},
+            id: id,
           });
         }
       })

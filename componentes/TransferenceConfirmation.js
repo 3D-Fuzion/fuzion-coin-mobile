@@ -13,7 +13,43 @@ import {
 import axios from 'axios';
 import * as KeyChain from 'react-native-keychain';
 
-export default function LoginScreen({navigation, route}) {
+export default function TransferenceConfirmation({navigation, route}) {
+  async function Transfer() {
+    const token = await KeyChain.getGenericPassword();
+    const id = route.params.id;
+    const email = route.params.email;
+    console.log(id, email);
+    const url = 'https://fuzion-coin.azurewebsites.net/pix';
+    axios
+      .post(
+        url,
+        {
+          userId: id,
+          emailDest: email,
+          amount: 10,
+        },
+        {
+          headers: {
+            'x-acess-token': token.password,
+          },
+        },
+      )
+      .then(res => {
+        if (res.status == 200) {
+          Alert.alert(
+            'Transferencia Concluida',
+            'sua transferencia foi realizada com sucesso!',
+          );
+          navigation.navigate('Home', {
+            id: id,
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   return (
     <View
       style={{
@@ -67,6 +103,7 @@ export default function LoginScreen({navigation, route}) {
             R$ **,**
           </Text>
           <TouchableOpacity
+            onPress={Transfer}
             style={{
               width: '50%',
               height: '100%',

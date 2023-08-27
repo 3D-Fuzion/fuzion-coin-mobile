@@ -7,10 +7,9 @@ export default function MainScreen({navigation, route}) {
   const [coins, setCoins] = useState(0);
 
   async function RefreshCoins() {
-    const {id} = route.params;
-    let url = 'https://fuzion-coin.azurewebsites.net/coin/' + id.id;
+    const id = route.params.id;
+    let url = 'https://fuzion-coin.azurewebsites.net/coin/' + id;
     const token = await KeyChain.getGenericPassword();
-    console.log(token.password);
     axios
       .get(url, {
         headers: {
@@ -27,13 +26,14 @@ export default function MainScreen({navigation, route}) {
         } else {
           Alert.alert('Ocorreu um Erro', 'O Sistema pode estar fora do ar');
         }
+        console.log(error);
       });
   }
 
   function Transferences() {
-    const {id} = route.params;
+    const id = route.params.id;
     navigation.navigate('Transferences', {
-      id: {id},
+      id: id,
     });
   }
 

@@ -21,7 +21,7 @@ export default function LoginScreen({navigation, route}) {
   const [userData, setUserData] = useState();
 
   let userContainer;
-
+  let transferButton;
   useEffect(() => {
     async function GetUser() {
       const token = await KeyChain.getGenericPassword();
@@ -46,7 +46,42 @@ export default function LoginScreen({navigation, route}) {
     GetUser();
   }, [userEmail]);
 
+  function ConfirmTransference() {
+    const id = route.params.id;
+    console.log(id);
+    navigation.navigate('TransferenceConfirmation', {
+      name: userData,
+      id: id,
+      email: userEmail,
+    });
+  }
+
   if (isLoad) {
+    transferButton = (
+      <TouchableOpacity
+        disabled={false}
+        onPress={ConfirmTransference}
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          borderRadius: 10,
+          width: '90%',
+          height: '10%',
+        }}>
+        <Text
+          style={{
+            fontSize: 20,
+            textAlign: 'center',
+            transform: [{translateY: +12}],
+            borderRadius: 10,
+            width: '100%',
+            height: '100%',
+          }}>
+          Transferir para esse Pix
+        </Text>
+      </TouchableOpacity>
+    );
     userContainer = (
       <View
         style={{
@@ -98,6 +133,31 @@ export default function LoginScreen({navigation, route}) {
       </View>
     );
   } else {
+    transferButton = (
+      <TouchableOpacity
+        disabled={true}
+        onPress={ConfirmTransference}
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          borderRadius: 10,
+          width: '90%',
+          height: '10%',
+        }}>
+        <Text
+          style={{
+            fontSize: 20,
+            textAlign: 'center',
+            transform: [{translateY: +12}],
+            borderRadius: 10,
+            width: '100%',
+            height: '100%',
+          }}>
+          Transferir para esse Pix
+        </Text>
+      </TouchableOpacity>
+    );
     userContainer = (
       <View
         style={{
@@ -141,27 +201,7 @@ export default function LoginScreen({navigation, route}) {
             borderRadius: 10,
           }}></TextInput>
         {userContainer}
-        <TouchableOpacity
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            borderRadius: 10,
-            width: '90%',
-            height: '10%',
-          }}>
-          <Text
-            style={{
-              fontSize: 20,
-              textAlign: 'center',
-              transform: [{translateY: +12}],
-              borderRadius: 10,
-              width: '100%',
-              height: '100%',
-            }}>
-            Transferir para esse Pix
-          </Text>
-        </TouchableOpacity>
+        {transferButton}
       </View>
     </View>
   );
