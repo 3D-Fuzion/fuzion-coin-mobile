@@ -5,13 +5,14 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from './componentes/LoginScreen';
 import MainScreen from './componentes/MainScreen';
 import Transferences from './componentes/Transferences';
+import TransferenceConfirmation from './componentes/TransferenceConfirmation';
 
 const Stack = createNativeStackNavigator();
 export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="TransferenceConfirmation">
           <Stack.Screen
             name="Login"
             component={LoginScreen}
@@ -25,6 +26,11 @@ export default class App extends Component {
           <Stack.Screen
             name="Transferences"
             component={Transferences}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="TransferenceConfirmation"
+            component={TransferenceConfirmation}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

@@ -19,57 +19,93 @@ export default function LoginScreen({navigation, route}) {
   const [userEmail, setUserEmail] = useState('');
   const [isLoad, setLoad] = useState(false);
   const [userData, setUserData] = useState();
-  const [onPaying, setOnPaying] = useState(true);
-  let userContainer;
-  let payModal;
-  async function GetUser() {
-    const token = await KeyChain.getGenericPassword();
-    console.log(token.password);
-    console.log(userEmail);
-    const url =
-      'https://fuzion-coin.azurewebsites.net/user/pix/search/' + userEmail;
 
-    axios
-      .get(url, {
-        headers: {
-          'x-acess-token': token.password,
-        },
-      })
-      .then(res => {
-        if (res.status === 404) {
-          Alert.alert('Nenhum usuario encontrado', 'Verique o email digitado');
-        }
-        setUserData(res.data.name);
-        setLoad(true);
-      })
-      .catch(error => {
-        Alert.alert(error.message, 'O Sistema pode estar fora do ar');
-      });
-  }
+  let userContainer;
+
+  useEffect(() => {
+    async function GetUser() {
+      const token = await KeyChain.getGenericPassword();
+      const url =
+        'https://fuzion-coin.azurewebsites.net/user/pix/search/' + userEmail;
+
+      axios
+        .get(url, {
+          headers: {
+            'x-acess-token': token.password,
+          },
+        })
+        .then(res => {
+          console.log('Usuario encontrado');
+          setUserData(res.data.name);
+          setLoad(true);
+        })
+        .catch(error => {
+          console.log('Aconteceu um Erro' + error);
+        });
+    }
+    GetUser();
+  }, [userEmail]);
+
   if (isLoad) {
     userContainer = (
-      <SafeAreaView
+      <View
         style={{
-          width: '90%',
-          height: '90%',
+          padding: 10,
+          width: '100%',
+          height: '60%',
+          backgroundColor: 'rgba(34,123,191,255)',
+          borderRadius: 10,
         }}>
         <Text
           style={{
-            fontSize: 15,
+            width: '100%',
             color: 'white',
-            fontWeight: 'bold',
+            fontSize: 25,
           }}>
-          Nome: {userData}
+          TRANSFERINDO
         </Text>
-      </SafeAreaView>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 50,
+          }}>
+          R$ ***
+        </Text>
+        <Text
+          style={{
+            color: 'white',
+            marginTop: 10,
+            fontSize: 20,
+          }}>
+          Chave Pix: {userData}
+        </Text>
+        <Text
+          style={{
+            color: 'white',
+            marginTop: 10,
+            fontSize: 20,
+          }}>
+          Cpf: ***
+        </Text>
+        <Text
+          style={{
+            color: 'white',
+            marginTop: 10,
+            fontSize: 20,
+          }}>
+          Instituicao: ***
+        </Text>
+      </View>
     );
   } else {
     userContainer = (
-      <SafeAreaView
+      <View
         style={{
-          width: '90%',
-          height: '90%',
-        }}></SafeAreaView>
+          width: '100%',
+          height: '60%',
+          borderRadius: 10,
+          backgroundColor: 'rgba(34,123,191,255)',
+        }}></View>
     );
   }
 
@@ -87,35 +123,45 @@ export default function LoginScreen({navigation, route}) {
           justifyContent: 'top',
           gap: 10,
           width: '90%',
-          height: '90%',
-          backgroundColor: 'white',
+          height: '80%',
+          backgroundColor: 'rgba(17,76,120,255)',
           padding: 20,
           borderRadius: 10,
         }}>
         <TextInput
+          onChange={event => setUserEmail(event.nativeEvent.text)}
+          placeholder="Digite a chave Pix"
+          textAlign="center"
           style={{
-            width: '100%',
+            fontSize: 20,
+            width: '90%',
+            transform: [{translateY: -45}],
             height: '10%',
-            minHeight: 80,
-            backgroundColor: 'orange',
+            backgroundColor: 'white',
             borderRadius: 10,
           }}></TextInput>
+        {userContainer}
         <TouchableOpacity
           style={{
-            width: '100%',
-            height: '5%',
-            minHeight: 40,
-            backgroundColor: 'green',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'white',
             borderRadius: 10,
-          }}></TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            width: '100%',
-            height: '30%',
-            minHeight: 200,
-            backgroundColor: 'purple',
-            borderRadius: 10,
-          }}></TouchableOpacity>
+            width: '90%',
+            height: '10%',
+          }}>
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: 'center',
+              transform: [{translateY: +12}],
+              borderRadius: 10,
+              width: '100%',
+              height: '100%',
+            }}>
+            Transferir para esse Pix
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
